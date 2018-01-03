@@ -1,0 +1,30 @@
+{
+  "name": "eslint-plugin-zooshgroup",
+  "version": "1.0.0",
+  "author": {
+    "name": "Barnabas Gema",
+    "email": "barnabas.gema@zooshgroup.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "A set of eslint rules used at Zoosh Group.",
+  "devDependencies": {
+    "eslint": "1.8.0",
+    "tape": "^3.4.0"
+  },
+  "engine": {
+    "node": ">= 6.x"
+  },
+  "main": "index.js",
+  "pre-commit": [
+    "test"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/zooshgroup/eslint-plugin-zooshgroup.git"
+  },
+  "scripts": {
+    "test": "node test/index.js"
+  }
+}
