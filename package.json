@@ -10,8 +10,7 @@
   "deprecated": false,
   "description": "A set of eslint rules used at Zoosh Group.",
   "devDependencies": {
-    "eslint": "1.8.0",
-    "tape": "^3.4.0"
+    "eslint": "1.8.0"
   },
   "engine": {
     "node": ">= 6.x"
