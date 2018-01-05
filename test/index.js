@@ -1,51 +1,25 @@
 const RuleTester = require('eslint').RuleTester;
-const maxFunctionLines = require('../rules/max-function-lines.js');
+const maxFunctionLines = require('./max-function-lines');
+const noCommentedCode = require('./no-commented-code');
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parserOptions: {
+    ecmaVersion: 7,
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
+});
 
-function generateLines(len) {
-  let chars = [];
-  for (let i = 0; i < len; i++) {
-    chars[i] = '\n';
-  }
+const tests = [
+  ...maxFunctionLines,
+  ...noCommentedCode
+];
 
-  return chars.join('');
+for (test of tests) {
+  ruleTester.run(test.name, test.rule, {
+    valid: test.valid,
+    invalid: test.invalid,
+  });
 }
-
-ruleTester.run('max-function-lines with default value', maxFunctionLines, {
-  valid: [
-    `function foo() {
-    }`,
-    'function foo() {}'
-  ],
-  invalid: [{
-    code: `function foo() { ${generateLines(30)} }`,
-    errors: [{
-      message: 'Function exceeds the limit by 6 lines',
-    }],
-  }],
-});
-
-const OPTIONS = [{ maxLines: 15 }];
-ruleTester.run('max-function-lines with custom value', maxFunctionLines, {
-  valid: [
-    {
-      code: `function foo() {
-        }`,
-      options: OPTIONS,
-    },
-    {
-      code: 'function foo() {}',
-      options: OPTIONS,
-    }
-  ],
-  invalid: [{
-    code: `function foo() { ${generateLines(20)} }`,
-    options: OPTIONS,
-    errors: [{
-      message: 'Function exceeds the limit by 6 lines',
-    }],
-  }],
-});
 
 console.log('Tests passed!');
