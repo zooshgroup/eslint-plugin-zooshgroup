@@ -9,7 +9,8 @@ A set of custom plugins used at Zoosh Group
     "plugins": ["zooshgroup"],
     "rules": {
         "zooshgroup/max-function-lines": ["error", { maxLines: 20 }],
-        "zooshgroup/no-commented-lines": ["warning"]
+        "zooshgroup/no-commented-lines": ["warning"],
+        "zooshgroup/const-uppercase": ["error", { globalsOnly: true }],
     }
 }
 ```
@@ -34,7 +35,24 @@ Block comments on consecutive lines are treated as one. This causes a known issu
   // }
 ```
 
-For more examples of the rules please see the tests.
+### `const-uppercase`
+
+This rule checks if the `const` declarations that assign a constant value to the variable use uppercase notation. A value is treated as constant if it is only built from literals (i.e. `string`, `number`, `boolean` and `null`), unary operators and binary operators. An error is also shown for uppercase non-constant variables. With the `globalsOnly` option the check is only done for variables that are declared in module scope.
+
+Valid examples:
+```js
+const FOO = 3;
+const FOO = null;
+const FOO = true;
+const FOO = (3);
+const FOO = 3 + 7 * 5;
+const FOO = 4 + 3 * (-5 + 7);
+const FOO = -5;
+const FOO = 'bar';
+const FOO = `bar`;
+```
+
+**For more examples of the rules check out the tests.**
 
 ## Installation
 

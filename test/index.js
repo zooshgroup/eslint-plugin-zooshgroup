@@ -1,6 +1,7 @@
 const RuleTester = require('eslint').RuleTester;
 const maxFunctionLines = require('./max-function-lines');
 const noCommentedCode = require('./no-commented-code');
+const constUppercase = require('./const-uppercase');
 
 const ruleTester = new RuleTester({
   parserOptions: {
@@ -12,7 +13,8 @@ const ruleTester = new RuleTester({
 
 const tests = [
   ...maxFunctionLines,
-  ...noCommentedCode
+  ...noCommentedCode,
+  ...constUppercase
 ];
 
 for (test of tests) {
