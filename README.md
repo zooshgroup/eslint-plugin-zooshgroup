@@ -19,7 +19,7 @@ A set of custom plugins used at Zoosh Group
 
 ### `max-function-lines`
 
-This rule checks see if the entire source code of a function is less
+This rule checks see if the entire source code of a function or arrow function is less
 then the given limit. The limit defaults to 25 lines.
 
 ### `no-commented-code`

@@ -15,14 +15,28 @@ const defaultTests = {
   valid: [
     `function foo() {
     }`,
-    'function foo() {}'
+    `function foo() {}`,
+    `() => {}`,
+    `() => {
+    }`,
+    `arr.map(() => {})`,
+    `arr.map(() => {
+    })`
   ],
-  invalid: [{
-    code: `function foo() { ${generateLines(30)} }`,
-    errors: [{
-      message: 'Function exceeds the limit by 6 lines',
-    }],
-  }],
+  invalid: [
+    {
+      code: `function foo() { ${generateLines(30)} }`,
+      errors: [{
+        message: 'Function exceeds the limit by 6 lines',
+      }],
+    },
+    {
+      code: `(x) => { ${generateLines(30)} }`,
+      errors: [{
+        message: 'Function exceeds the limit by 6 lines',
+      }],
+    }
+  ],
 };
 
 const OPTIONS = [{ maxLines: 15 }];
@@ -36,17 +50,35 @@ const customTests = {
       options: OPTIONS,
     },
     {
-      code: 'function foo() {}',
+      code: `function foo() {}`,
+      options: OPTIONS,
+    },
+    {
+      code: `(x) => {
+      }`,
+      options: OPTIONS,
+    },
+    {
+      code: `function foo() {}`,
       options: OPTIONS,
     }
   ],
-  invalid: [{
-    code: `function foo() { ${generateLines(20)} }`,
-    options: OPTIONS,
-    errors: [{
-      message: 'Function exceeds the limit by 6 lines',
-    }],
-  }],
+  invalid: [
+    {
+      code: `function foo() { ${generateLines(20)} }`,
+      options: OPTIONS,
+      errors: [{
+        message: 'Function exceeds the limit by 6 lines',
+      }],
+    },
+    {
+      code: `(x) => { ${generateLines(20)} }`,
+      options: OPTIONS,
+      errors: [{
+        message: 'Function exceeds the limit by 6 lines',
+      }],
+    }
+  ],
 };
 
 module.exports = [ defaultTests, customTests ];

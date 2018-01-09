@@ -18,6 +18,8 @@ function maxFunctionLines(context) {
   return {
     FunctionDeclaration: node => checkLimit(context, node),
     FunctionExpression: node => checkLimit(context, node),
+    ArrowFunctionDeclaration: node => checkLimit(context, node),
+    ArrowFunctionExpression: node => checkLimit(context, node),
   };
 }
 
