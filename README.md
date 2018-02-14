@@ -20,7 +20,12 @@ A set of custom plugins used at Zoosh Group
 ### `max-function-lines`
 
 This rule checks see if the entire source code of a function or arrow function is less
-then the given limit. The limit defaults to 25 lines.
+then the given limit.
+
+#### Options
+
+##### `maxLines`
+An integer that specifies the maximal length of a function that is considered ok. Defaults to `25`.
 
 ### `no-commented-code`
 
@@ -37,7 +42,7 @@ Block comments on consecutive lines are treated as one. This causes a known issu
 
 ### `const-uppercase`
 
-This rule checks if the `const` declarations that assign a constant value to the variable use uppercase notation. A value is treated as constant if it is only built from literals (i.e. `string`, `number`, `boolean` and `null`), unary operators and binary operators. An error is also shown for uppercase non-constant variables. With the `globalsOnly` option the check is only done for variables that are declared in module scope.
+This rule checks if the `const` declarations that assign a constant value to the variable use uppercase notation. A value is treated as constant if it is only built from literals (i.e. `string`, `number`, `boolean` and `null`), unary operators and binary operators.
 
 Valid examples:
 ```js
@@ -51,6 +56,14 @@ const FOO = -5;
 const FOO = 'bar';
 const FOO = `bar`;
 ```
+
+#### Options
+
+##### `enforceLower`
+A boolean that specifies if an error should be shown for uppercase non-constant variables. Defaults to `false`.
+
+##### `globalsOnly`
+A boolean that specifies if only variables defined in the module scope should be checked. Defaults to `false`.
 
 **For more examples of the rules check out the tests.**
 

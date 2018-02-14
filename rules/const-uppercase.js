@@ -20,6 +20,7 @@ function isConstant(node) {
 
 function checkDeclaration(context, node) {
   const globalsOnly = context.options[0] && context.options[0].globalsOnly;
+  const enforceLower = context.options[0] && context.options[0].enforceLower;
   const isGlobal = node.parent.type === 'Program';
   const needsCheck = globalsOnly ? isGlobal : true;
   if (node.kind === 'const' && needsCheck) {
@@ -31,7 +32,7 @@ function checkDeclaration(context, node) {
       if (isValueConstant && !isNameUpper) {
         context.report(node, UPPER_MESSAGE);
       }
-      if (!isValueConstant && isNameUpper) {
+      if (!isValueConstant && isNameUpper && enforceLower) {
         context.report(node, LOWER_MESSAGE);
       }
     });
@@ -48,7 +49,8 @@ module.exports = constUppercase;
 module.exports.schema = [{
   type: 'object',
   properties: {
-    globalsOnly: { type: 'boolean' }
+    globalsOnly: { type: 'boolean' },
+    enforceLower: { type: 'boolean' }
   },
   additionalProperties: false,
 }];

@@ -46,6 +46,16 @@ function addGlobalOption(snippet) {
   return Object.assign({}, snippet, { options: [{ globalsOnly: true }] });
 }
 
+function addEnforceLowerOption(snippet) {
+  if (typeof snippet === 'string') {
+    return {
+      code: snippet,
+      options: [{ enforceLower: true }],
+    };
+  }
+  return Object.assign({}, snippet, { options: [{ enforceLower: true }] });
+}
+
 const validSnippets = [
   `const foo = bar(3);`,
   `const FOO = 3;`,
@@ -106,29 +116,29 @@ const globalOnlyTests = {
   name: 'const-uppercase with globalsOnly option',
   rule: constUppercase,
   valid: [
-    ...validSnippets.map(addGlobalOption),
-    ...lowerInvalidSnippets.map(decorateWithForLoop).map(addGlobalOption),
-    ...upperInvalidSnippets.map(decorateWithForLoop).map(addGlobalOption),
-    ...lowerInvalidSnippets.map(decorateWithFunction).map(addGlobalOption),
-    ...upperInvalidSnippets.map(decorateWithFunction).map(addGlobalOption),
-    ...lowerInvalidSnippets.map(decorateWithArrowFunction).map(addGlobalOption),
-    ...upperInvalidSnippets.map(decorateWithArrowFunction).map(addGlobalOption)
-  ],
+    ...validSnippets,
+    ...lowerInvalidSnippets.map(decorateWithForLoop),
+    ...upperInvalidSnippets.map(decorateWithForLoop),
+    ...lowerInvalidSnippets.map(decorateWithFunction),
+    ...upperInvalidSnippets.map(decorateWithFunction),
+    ...lowerInvalidSnippets.map(decorateWithArrowFunction),
+    ...upperInvalidSnippets.map(decorateWithArrowFunction),
+    ...upperInvalidSnippets.map(addLowerError),
+  ].map(addGlobalOption),
   invalid: [
-    ...lowerInvalidSnippets.map(addUpperError).map(addGlobalOption),
-    ...upperInvalidSnippets.map(addLowerError).map(addGlobalOption)
-  ],
+    ...lowerInvalidSnippets.map(addUpperError),
+  ].map(addGlobalOption),
 }
 
-const defaultTests = {
-  name: 'const-uppercase with default setting',
+const enforceLowerTests = {
+  name: 'const-uppercase with enforceLower option',
   rule: constUppercase,
   valid: [
     ...validSnippets,
     ...validSnippets.map(decorateWithForLoop),
     ...validSnippets.map(decorateWithFunction),
-    ...validSnippets.map(decorateWithArrowFunction)
-  ],
+    ...validSnippets.map(decorateWithArrowFunction),
+  ].map(addEnforceLowerOption),
   invalid: [
     ...lowerInvalidSnippets.map(addUpperError),
     ...upperInvalidSnippets.map(addLowerError),
@@ -137,8 +147,29 @@ const defaultTests = {
     ...lowerInvalidSnippets.map(decorateWithFunction).map(addUpperError),
     ...upperInvalidSnippets.map(decorateWithFunction).map(addLowerError),
     ...lowerInvalidSnippets.map(decorateWithArrowFunction).map(addUpperError),
-    ...upperInvalidSnippets.map(decorateWithArrowFunction).map(addLowerError)
+    ...upperInvalidSnippets.map(decorateWithArrowFunction).map(addLowerError),
+  ].map(addEnforceLowerOption),
+};
+
+const defaultTests = {
+  name: 'const-uppercase with default setting',
+  rule: constUppercase,
+  valid: [
+    ...validSnippets,
+    ...validSnippets.map(decorateWithForLoop),
+    ...validSnippets.map(decorateWithFunction),
+    ...validSnippets.map(decorateWithArrowFunction),
+    ...upperInvalidSnippets.map(addLowerError),
+    ...upperInvalidSnippets.map(decorateWithForLoop).map(addLowerError),
+    ...upperInvalidSnippets.map(decorateWithFunction).map(addLowerError),
+    ...upperInvalidSnippets.map(decorateWithArrowFunction).map(addLowerError),
+  ],
+  invalid: [
+    ...lowerInvalidSnippets.map(addUpperError),
+    ...lowerInvalidSnippets.map(decorateWithForLoop).map(addUpperError),
+    ...lowerInvalidSnippets.map(decorateWithFunction).map(addUpperError),
+    ...lowerInvalidSnippets.map(decorateWithArrowFunction).map(addUpperError),
   ],
 };
 
-module.exports = [ defaultTests, globalOnlyTests ];
+module.exports = [ defaultTests, globalOnlyTests, enforceLowerTests ];
