@@ -6,13 +6,13 @@
     "email": "barnabas.gema@zooshgroup.com"
   },
   "bundleDependencies": false,
-  "dependencies": {
-    "espree": "3.5.2"
+  "peerDependencies": {
+    "espree": "4.0.0"
   },
   "deprecated": false,
   "description": "A set of eslint rules used at Zoosh Group.",
   "devDependencies": {
-    "eslint": "4.14.0"
+    "eslint": "5.5.0"
   },
   "engine": {
     "node": ">= 6"
